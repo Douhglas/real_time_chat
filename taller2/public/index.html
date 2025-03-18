@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Realtime Chat</title>
+  </head>
+  <body>
+    <h1>Realtime Chat</h1>
+    <ul id="messages"></ul>
+    <form id="chatForm">
+      <input id="username" type="text" placeholder="Your name..." required />
+      <input
+        id="message"
+        type="text"
+        placeholder="Write a message..."
+        required
+      />
+      <button type="submit">Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      socket.on("chat message", function (msg) {
+        const item = document.createElement("li");
+        const time = msg.formattedTime || new Date().toLocaleTimeString();
+        item.textContent = `[${time}] ${msg.user}: ${msg.message}`;
+        document.getElementById("messages").appendChild(item);
+      });
+
+      document
+        .getElementById("chatForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const message = document.getElementById("message").value;
+          if (username && message) {
+            socket.emit("chat message", {
+              user: username,
+              message: message,
+              timestamp: new Date(),
+            });
+            document.getElementById("message").value = "";
+          }
+        });
+    </script>
+  </body>
+</html>
