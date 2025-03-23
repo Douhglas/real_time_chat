@@ -13,9 +13,7 @@ const io = new SocketIOServer(server, {
   }
 });
 
-app.use(cors({
-  origin: 'http://localhost:5173'
-}));
+app.use(cors());
 app.use(express.static("public"));
 
 app.get("/hi", (_req: Request, res: Response) => {
