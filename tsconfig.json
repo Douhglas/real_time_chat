@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",  // Habilita JSX en TypeScript
-    "moduleResolution": "node",  // Asegura la correcta resolución de módulos
-    "esModuleInterop": true
+    "moduleResolution": "node16",  // Asegura la correcta resolución de módulos
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": "node16",
   }
 }
